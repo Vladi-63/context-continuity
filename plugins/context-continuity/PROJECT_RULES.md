@@ -1,0 +1,5 @@
+Keep the current task, exact revision, constraints, checks and next action in a short handoff. Work from that handoff and the latest task. Open only the relevant sections of named sources, and check the revision or hash before rereading them. Keep full chat archives, datasets and logs on disk. Use status snapshots, local hashes and bounded excerpts for follow-up.
+
+In a local Work or Codex project, enable native post-turn compaction at 35% of usable context and leave it enabled for every turn. Preserve a short handoff before compaction and recheck the next action and exact source afterward. Use the host's native compaction control if a safe pause requires manual compaction. Never send a slash command as ordinary chat text.
+
+Send the goal, constraints, source paths and acceptance check in the outgoing task. Put long reference material in a local file and pass its path and SHA-256. Preserve operative instructions in the task. Read a specific older turn only when necessary to resolve a concrete question.

@@ -1,0 +1,12 @@
+{
+  "name": "context-continuity",
+  "version": "0.3.0",
+  "description": "Shortens local Work and Codex handoffs and configures native post-turn compaction.",
+  "interface": {
+    "displayName": "Context Continuity",
+    "shortDescription": "Context continuity",
+    "longDescription": "Configures 35% native compaction and keeps chat handoffs and history lookups short in opted-in projects.",
+    "developerName": "Context Continuity contributors",
+    "category": "Productivity"
+  }
+}
