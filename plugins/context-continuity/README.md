@@ -14,7 +14,7 @@ Use `python3 /path/to/plugin/prompt_packet.py --task task.txt --source path/to/m
 
 For a single draft, place the complete task, constraints and acceptance checks first, then start a new line with `--- MATERIALS ON DISK ---` or `--- МАТЕРИАЛЫ НА ДИСК ---` and append the reference material. Run the helper with `--draft draft.txt` or `--draft -` for stdin, or use the same format for a supported chat-to-chat send. The trusted `PreToolUse` hook replaces the send payload with the card and saves the marked material in the private directory `reports/.context-prompt-materials`. Ordinary messages up to 4 KiB pass through. A longer unmarked message is held for clarification.
 
-The 4 KiB limit applies to the outgoing message. Work and Codex assemble the model context and token cache. The built-in composer requires preparing the card before pasting it. The `UserPromptSubmit` hook can block a raw large draft on hosts that support it.
+The 4 KiB limit applies to automated handoffs and cards. Messages you type or paste into the Work or Codex composer go through as written. You can prepare and paste a card when you want to share a local file. Work and Codex assemble the model context and token cache.
 
 ## Checkpoints
 

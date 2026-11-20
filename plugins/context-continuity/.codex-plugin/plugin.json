@@ -1,6 +1,6 @@
 {
   "name": "context-continuity",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Shortens local Work and Codex handoffs and configures native post-turn compaction.",
   "interface": {
     "displayName": "Context Continuity",

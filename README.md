@@ -6,11 +6,11 @@ Context Continuity is a local plugin for ChatGPT Work and Codex. When work spans
 
 ## A real handoff
 
-| Original task and inline materials | Task card delivered |
-| ---: | ---: |
-| 101,936 tokens | **319 tokens** |
+| Original task and inline materials | Task card delivered | Fewer handoff tokens | Reduction |
+| ---: | ---: | ---: | ---: |
+| 101,936 | 319 | **101,617** | **99.7%** |
 
-That is **99.7% fewer tokens in the handoff text**. In this test, the sending chat invoked the plugin's handler before dispatch. The receiving chat completed the requested file verification using the card and the local reference. Counts use `o200k_base`. The application's model requests also include the receiving chat's active history and instructions.
+In this test, the sending chat invoked the plugin's handler before dispatch. The receiving chat completed the requested file verification using the card and the local reference. Counts use `o200k_base`. The application's model requests also include the receiving chat's active history and instructions.
 
 ## How it works
 
@@ -32,11 +32,11 @@ python3 -B plugins/context-continuity/configure_project.py --project "/path/to/p
 
 Replace `/path/to/project` with the project you want to configure. The setup script writes or preserves the top-level `model_post_turn_compact_threshold_percent = 35` in the project's `.codex/config.toml`, adds the workflow to `AGENTS.md`, opts the project into the plugin's handlers, and excludes saved materials from Git. If you manage the configuration by hand, set the same key and pass `--keep-config`. The host must trust the selected project configuration.
 
-Review and approve the three **Context Continuity** hooks in the host. A new or resumed local chat can load the rules. Existing chats can require the host to reload the plugin. For a user-level policy across trusted local projects, place the same compaction key in the user-level configuration and opt each project into the hooks with the setup command.
+Review and approve the two **Context Continuity** hooks in the host. A new or resumed local chat can load the rules. Existing chats can require the host to reload the plugin. For a user-level policy across trusted local projects, place the same compaction key in the user-level configuration and opt each project into the hooks with the setup command.
 
 For supported chat-to-chat sends, repeat the setup command with `--thread-id CHAT_ID` for each local destination, using its chat ID. Projects with an existing `tools/work-context-targets.json` and migration setup keep those destinations. Use the setup command again when you need to register a new chat.
 
-You can also add the GitHub repository as a marketplace using `codex plugin marketplace add OWNER/REPO --ref v0.3.0`, replacing `OWNER/REPO` with this repository's owner and name. Keep a local checkout or unpacked release to run the project setup script.
+You can also add the GitHub repository as a marketplace using `codex plugin marketplace add OWNER/REPO --ref v0.3.1`, replacing `OWNER/REPO` with this repository's owner and name. Keep a local checkout or unpacked release to run the project setup script.
 
 ## Use
 
@@ -44,7 +44,7 @@ You can also add the GitHub repository as a marketplace using `codex plugin mark
 | --- | --- |
 | Work on a task | The project rules keep the current assignment and next action short and direct the chat to relevant source ranges. The host compacts active history after a final response at 35% of usable context. |
 | Send a task from one registered local project chat to another | Put task and acceptance criteria first, then `--- MATERIALS ON DISK ---` (or `--- МАТЕРИАЛЫ НА ДИСК ---`) on its own line and paste the reference material below. The hook sends the task, relative path and SHA-256. Short unmarked text passes through. An unmarked message above 4 KiB is held for clarification. |
-| Type directly into the Work or Codex composer | Prepare the card below and paste its result. On supported hosts the submit hook stops an oversized or still-marked draft before it reaches the model. The composer hook API exposes blocking and extra context. |
+| Type directly into the Work or Codex composer | Your message goes through as written, including long or marked drafts. You can use the helper below to prepare a card when you want to share a local file. |
 | Look up a recent chat turn | Standard lookups of registered destinations default to one turn, up to 2,000 characters per item, with tool output excluded. A caller can explicitly request a specific older turn or larger item. |
 
 ```sh

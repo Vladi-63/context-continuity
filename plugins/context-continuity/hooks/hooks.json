@@ -12,17 +12,6 @@
         ]
       }
     ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 -B \"$PLUGIN_ROOT/prompt_packet.py\" --hook",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "^mcp__codex_app__(send_message_to_thread|read_thread)$",

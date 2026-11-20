@@ -174,10 +174,6 @@ def hook(event):
     if name == 'SessionStart':
         return {'hookSpecificOutput': {'hookEventName': name,
                                        'additionalContext': RULES.read_text(encoding='utf-8').strip()}}
-    prompt = event.get('prompt')
-    if name == 'UserPromptSubmit' and isinstance(prompt, str) and needs_packet(prompt):
-        return block('Подготовь короткую карточку через prompt_packet.py --draft или --task и --source, '
-                     'затем вставь результат. В карточке остаются задача, путь и SHA-256.')
     return None
 
 

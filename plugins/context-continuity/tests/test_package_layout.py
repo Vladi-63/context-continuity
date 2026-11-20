@@ -6,7 +6,7 @@ class PackageLayoutTests(unittest.TestCase):
   manifest=json.loads((root/'.codex-plugin/plugin.json').read_text())
   self.assertNotIn('hooks',manifest)
   hooks=json.loads((root/'hooks/hooks.json').read_text())['hooks']
-  self.assertEqual(set(hooks), {'SessionStart', 'UserPromptSubmit', 'PreToolUse'})
+  self.assertEqual(set(hooks), {'SessionStart', 'PreToolUse'})
   self.assertEqual(hooks['PreToolUse'][0]['matcher'], '^mcp__codex_app__(send_message_to_thread|read_thread)$')
   self.assertIn('compact', hooks['SessionStart'][0]['matcher'].split('|'))
   self.assertTrue((root/'PROJECT_RULES.md').is_file())

@@ -71,12 +71,13 @@ class PromptPacketTest(unittest.TestCase):
         config.unlink()
         self.assertIsNone(prompt_packet.hook(event))
 
-    def test_composer_blocks_long_draft_before_submission(self):
+    def test_composer_messages_pass_through_regardless_of_length_or_marker(self):
         event = {'hook_event_name': 'UserPromptSubmit', 'cwd': str(self.root)}
-        self.assertIsNone(prompt_packet.hook(dict(event, prompt='Short instruction')))
-        self.assertEqual(prompt_packet.hook(dict(event, prompt='x' * 4097))['decision'], 'block')
+        oversized = 'ё' * (prompt_packet.PROMPT_LIMIT // 2 + 1)
         draft = f'Short instruction\n{prompt_packet.ENGLISH_MARKER}\nLong material'
-        self.assertEqual(prompt_packet.hook(dict(event, prompt=draft))['decision'], 'block')
+        for prompt in ('Short instruction', oversized, draft, f'{draft}\n{oversized}'):
+            with self.subTest(bytes=len(prompt.encode())):
+                self.assertIsNone(prompt_packet.hook(dict(event, prompt=prompt)))
         self.assertFalse((self.root / 'reports').exists())
         response = self.send(draft)
         self.assertIn('SHA-256', response['hookSpecificOutput']['updatedInput']['prompt'])
